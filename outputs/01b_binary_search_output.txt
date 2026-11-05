@@ -1,0 +1,5 @@
+Enter number of elements: 5
+Enter elements in sorted order:
+10 20 30 40 50
+Enter element to search: 40
+Element found at position 4

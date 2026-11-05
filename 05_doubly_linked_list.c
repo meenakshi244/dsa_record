@@ -1,0 +1,187 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+    int data;
+    struct node *prev;
+    struct node *next;
+};
+struct node *head = NULL;
+void create()
+{
+    struct node *newnode, *temp;
+    int n, i;
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+    head = NULL;
+    for (i = 0; i < n; i++)
+    {
+        newnode = (struct node *)malloc(sizeof(struct node));
+        printf("Enter data: ");
+        scanf("%d", &newnode->data);
+        newnode->prev = NULL;
+        newnode->next = NULL;
+        if (head == NULL)
+            head = newnode;
+        else
+        {
+            temp = head;
+            while (temp->next != NULL)
+                temp = temp->next;
+            temp->next = newnode;
+            newnode->prev = temp;
+        }
+    }
+}
+void insert()
+{
+    struct node *newnode, *temp;
+    int pos, i;
+    newnode = (struct node *)malloc(sizeof(struct node));
+    printf("Enter data: ");
+    scanf("%d", &newnode->data);
+    newnode->prev = NULL;
+    newnode->next = NULL;
+    printf("Enter position: ");
+    scanf("%d", &pos);
+    if (pos == 1)
+    {
+        newnode->next = head;
+        if (head != NULL)
+            head->prev = newnode;
+        head = newnode;
+    }
+    else
+    {
+        temp = head;
+        for (i = 1; i < pos - 1 && temp != NULL; i++)
+            temp = temp->next;
+        if (temp == NULL)
+            printf("Invalid position");
+        else
+        {
+            newnode->next = temp->next;
+            newnode->prev = temp;
+            if (temp->next != NULL)
+                temp->next->prev = newnode;
+            temp->next = newnode;
+        }
+    }
+}
+void deleteNode()
+{
+    struct node *temp;
+    int pos, i;
+    printf("Enter position: ");
+    scanf("%d", &pos);
+    if (head == NULL)
+    {
+        printf("List is empty");
+        return;
+    }
+    temp = head;
+    for (i = 1; i < pos && temp != NULL; i++)
+        temp = temp->next;
+    if (temp == NULL)
+    {
+        printf("Invalid position");
+        return;
+    }
+    if (temp->prev != NULL)
+        temp->prev->next = temp->next;
+    else
+        head = temp->next;
+    if (temp->next != NULL)
+        temp->next->prev = temp->prev;
+    free(temp);
+}
+void reverse()
+{
+    struct node *temp, *current;
+    current = head;
+    temp = NULL;
+    while (current != NULL)
+    {
+        temp = current->prev;
+        current->prev = current->next;
+        current->next = temp;
+        current = current->prev;
+    }
+    if (temp != NULL)
+        head = temp->prev;
+}
+void concatenate()
+{
+    struct node *head2, *newnode, *temp;
+    int n, i;
+    head2 = NULL;
+    printf("Enter number of nodes in second list: ");
+    scanf("%d", &n);
+    for (i = 0; i < n; i++)
+    {
+        newnode = (struct node *)malloc(sizeof(struct node));
+        printf("Enter data: ");
+        scanf("%d", &newnode->data);
+        newnode->prev = NULL;
+        newnode->next = NULL;
+        if (head2 == NULL)
+            head2 = newnode;
+        else
+        {
+            temp = head2;
+            while (temp->next != NULL)
+                temp = temp->next;
+            temp->next = newnode;
+            newnode->prev = temp;
+        }
+    }
+    if (head == NULL)
+        head = head2;
+    else
+    {
+        temp = head;
+        while (temp->next != NULL)
+            temp = temp->next;
+        temp->next = head2;
+        if (head2 != NULL)
+            head2->prev = temp;
+    }
+}
+void display()
+{
+    struct node *temp;
+    temp = head;
+    while (temp != NULL)
+    {
+        printf("%d <-> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL");
+}
+int main()
+{
+    int choice;
+    while (1)
+    {
+        printf("\n\n1. Create");
+        printf("\n2. Insert");
+        printf("\n3. Delete");
+        printf("\n4. Reverse");
+        printf("\n5. Concatenate");
+        printf("\n6. Display");
+        printf("\n7. Exit");
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1: create(); break;
+        case 2: insert(); break;
+        case 3: deleteNode(); break;
+        case 4: reverse(); break;
+        case 5: concatenate(); break;
+        case 6: display(); break;
+        case 7: exit(0);
+        default: printf("Invalid choice");
+        }
+    }
+}

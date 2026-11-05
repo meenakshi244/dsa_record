@@ -1,0 +1,5 @@
+Enter number of elements: 5
+Enter elements:
+50 20 40 10 30
+Sorted array:
+10 20 30 40 50 

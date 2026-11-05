@@ -1,0 +1,16 @@
+Enter number of vertices: 5
+Enter adjacency matrix (0 for no edge):
+0 10 0 30 100
+0 0 50 0 0
+0 0 0 0 10
+0 0 20 0 60
+0 0 0 0 0
+Enter source vertex (0 to 4): 0
+
+Vertex	Distance	Path
+0	0		0
+1	10		0 -> 1
+2	50		0 -> 3 -> 2
+3	30		0 -> 3
+4	60		0 -> 3 -> 2 -> 4
+
